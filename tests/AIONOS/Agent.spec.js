@@ -36,4 +36,11 @@ test('Login Test', async ({ page }) => {
 
     await page.locator('button[type="submit"]').click();
     await page.waitForTimeout(5000)
+
+
+    //Update Agent Creation\\
+
+    await page.locator('[type=button]').click();
+    await page.locator('#mui-103').fill('2309');
+    await page.getByRole('button', { name: 'Submit' }).click();
 });
