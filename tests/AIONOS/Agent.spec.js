@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test('Login Test', async ({ page }) => {
 
-    await page.goto('https://smart-exchange.gammasprint.com/sign-in');
+    await page.goto('https://dev.aionos.metawing.ai/sign-in');
 
     await page.getByPlaceholder('Email Address')
-        .fill('consumer.smartexchange@gmail.com');
+        .fill('consumer_aionos_brand@yopmail.com');
 
     await page.getByPlaceholder('Password')
         .fill('Aionos@1234');
@@ -22,17 +22,17 @@ test('Login Test', async ({ page }) => {
     await page.getByRole('option', { name: 'Whatsapp' }).click();
     await page.waitForTimeout(1000)
 
-    await page.locator('[name="agent_name"]').fill('Swati_Automate');
+    await page.locator('[name="agent_name"]').fill('Swati_UAT_');
 
-    await page.locator('[name="wa_number"]').fill('919999999999');
+    await page.locator('[name="wa_number"]').fill('6281519227412');
 
-    await page.locator('[name="wabaid"]').fill('123456789');
+    await page.locator('[name="wabaid"]').fill('102510056141722');
 
-    await page.locator('[name="phone_number_id"]').fill('123456789');
+    await page.locator('[name="phone_number_id"]').fill('128566400160220');
 
     await page.locator('[name="tier"]').fill('999'); 
 
-    await page.locator('[name="wa_access_token"]').fill('9045803495ioruoieuroeiureiwoie')
+    await page.locator('[name="wa_access_token"]').fill('EAAL797DrOE4BO4WmhJvaJ7Y1yW3tNIDGZAERggTKyW36xKc4MmfKQCopZBgTCdcCSqb6sztduDGFuerMiJjrr6ZCAaczZCGimS7Hp2iUxG0zxAA715ASZAGy5DkWwGfeWMEL5dwKvCN2VFcbFhmLbzVmKzUenQXhTeEmQ3P7ZCZBrLiGw5VteaxuVYXQHupdl28')
 
     await page.locator('button[type="submit"]').click();
     await page.waitForTimeout(5000)

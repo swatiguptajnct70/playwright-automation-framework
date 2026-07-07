@@ -10,20 +10,21 @@ test('Login Test', async ({ page }) => {
     await page.getByPlaceholder('Password')
         .fill('Aionos@1234');
 
-    await page.waitForTimeout(500)
+    await page.waitForTimeout(1000)
     await page.getByRole('button', { name: 'Log In' }).click();
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1000);
 
     await page.getByRole('button', { name: 'Templates' }).click();
     await page.getByRole('button', { name: 'Whatsapp Templates' }).click();
-    await page.waitForTimeout(500)
-    await page.getByRole('button', { name: 'Templates List' }).click();
     await page.waitForTimeout(1000)
+    await page.getByRole('button', { name: 'Templates List' }).click();
     await page.getByRole('button', { name: 'Create Template' }).click();
 
-    await page.waitForTimeout(500)
+    await page.waitForTimeout(1000)
 
-    await page.locator('[name="templateName"]').fill('temptesting1');
+    const templateName = `template_${Date.now()}`;
+
+    await page.locator('input[name="template_name"]').fill(templateName);
     await page.waitForTimeout(1000)
     await page.getByRole('combobox', { name: 'Template Language' }).click();
     await page.getByRole('option', { name: 'English', exact: true }).click();
@@ -34,16 +35,8 @@ test('Login Test', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Body Text' }).click();
     await page.getByRole('textbox', { name: 'Body Text' }).fill('Hi \ntest template');
     await page.waitForTimeout(1000)
-    const [response] = await Promise.all([
-        page.waitForResponse(res =>
-            res.url().includes('/template') &&
-            res.request().method() === 'POST'
-        ),
+    await page.getByRole('button', { name: 'Submit' }).click();
+    await page.waitForTimeout(5000)
 
-        page.getByRole('button', { name: 'Submit' }).click()
-    ]);
-await page.waitForTimeout(5000)
-    console.log("Status:", response.status());
-    console.log("Response:", await response.text());
 
 });
