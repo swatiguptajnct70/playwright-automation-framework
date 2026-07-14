@@ -34,7 +34,7 @@ test('Login Test', async ({ page }) => {
     await page.getByText('Send promotional offers,').click();
     await page.waitForTimeout(1000)
     await page.getByRole('textbox', { name: 'Body Text' }).click();
-    await page.getByRole('textbox', { name: 'Body Text' }).fill('Hi \ntest template');
+    await page.getByRole('textbox', { name: 'Body Text' }).fill("Hello,\nThis template is for testing purpose please ignore.\n\nBest regards,\nthanks");
     await page.waitForTimeout(1000)
     const [response] = await Promise.all([
         page.waitForResponse(res =>
