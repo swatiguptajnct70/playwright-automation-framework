@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test('Login Test', async ({ page }) => {
 
-    await page.goto('https://dev.aionos.metawing.ai/sign-in');
+    await page.goto('https://smart-exchange.gammasprint.com/sign-in');
 
     await page.getByPlaceholder('Email Address')
-        .fill('consumer_aionos_brand@yopmail.com');
+        .fill('consumer.smartexchange@gmail.com');
 
     await page.getByPlaceholder('Password')
         .fill('Aionos@1234');
@@ -22,7 +22,9 @@ test('Login Test', async ({ page }) => {
     await page.getByRole('option', { name: 'Whatsapp' }).click();
     await page.waitForTimeout(1000)
 
-    await page.locator('[name="agent_name"]').fill('Swati_UAT_');
+    const agent_name = `Agent_${Date.now()}`;
+
+    await page.locator('[name="agent_name"]').fill(agent_name);
 
     await page.locator('[name="wa_number"]').fill('6281519227412');
 
@@ -37,10 +39,4 @@ test('Login Test', async ({ page }) => {
     await page.locator('button[type="submit"]').click();
     await page.waitForTimeout(5000)
 
-
-    //Update Agent Creation\\
-
-    await page.locator('[type=button]').click();
-    await page.locator('#mui-103').fill('2309');
-    await page.getByRole('button', { name: 'Submit' }).click();
 });

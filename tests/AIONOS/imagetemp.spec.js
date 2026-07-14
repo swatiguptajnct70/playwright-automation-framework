@@ -25,28 +25,42 @@ test('Login Test', async ({ page }) => {
     const templateName = `template_${Date.now()}`;
 
     await page.locator('[name="templateName"]').fill(templateName);
-    await page.waitForTimeout(1000)
     await page.getByRole('combobox', { name: 'Template Language' }).click();
     await page.getByRole('option', { name: 'English', exact: true }).click();
-    await page.waitForTimeout(1000)
     await page.getByLabel('Select Template category').click();
     await page.getByText('Send promotional offers,').click();
-    await page.waitForTimeout(1000)
-
-    page.getByRole('textbox', { name: 'Body Text' }).click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(2000)
+    await page.getByRole('button', { name: 'None' }).first().click();
+    await page.waitForTimeout(2000)
+    await page.getByRole('menuitem', { name: 'Image There will be image' }).click();
+    await page.waitForTimeout(2000)
+    await page.getByRole('textbox', { name: 'Body Text' }).click();
+    await page.waitForTimeout(2000)
     await page.getByRole('textbox', { name: 'Body Text' }).click();
     await page.getByRole('textbox', { name: 'Body Text' }).fill('Hi \ntest template');
-    await page.waitForTimeout(1000)
-    const [response] = await Promise.all([
-        page.waitForResponse(res =>
-            res.url().includes('/template') &&
-            res.request().method() === 'POST'
-        ),
+    await page.waitForTimeout(2000)
 
-        page.getByRole('button', { name: 'Submit' }).click()
-    ]);
-    await page.waitForTimeout(5000)
+    await page.getByRole('button', { name: 'None' }).click();
+    await page.getByRole('menuitem', { name: 'Quick Reply This will be' }).click();
+    await page.waitForTimeout(2000)
+    await page.getByPlaceholder('Button Text').click();
+    await page.waitForTimeout(1000)
+    await page.getByPlaceholder('Button Text').fill('Reply');
+    await page.waitForTimeout(1000)
+    await page.getByPlaceholder('Button Text').press('Tab');
+    await page.waitForTimeout(1000)
+    await page.getByPlaceholder('Button Payload').fill('www.google.com');
+    await page.waitForTimeout(1000)
+    const path = require('path');
+
+    const filePath = path.join(__dirname, '../../test.data/image.jpeg');
+
+    const fileChooserPromise = page.waitForEvent('filechooser');
+
+    await page.getByRole('button', { name: /upload/i }).click();
+
+    const fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(filePath);
     console.log("Status:", response.status());
     console.log("Response:", await response.text())
 
