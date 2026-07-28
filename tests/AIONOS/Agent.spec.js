@@ -5,10 +5,10 @@ test('Login Test', async ({ page }) => {
     await page.goto('https://smart-exchange.gammasprint.com/sign-in');
 
     await page.getByPlaceholder('Email Address')
-        .fill('consumer.smartexchange@gmail.com');
+        .fill('test27072026_1@yopmail.com');
 
     await page.getByPlaceholder('Password')
-        .fill('Aionos@1234');
+        .fill('test27072026_1');
 
     await page.waitForTimeout(1000)
     await page.getByRole('button', { name: 'Log In' }).click();
@@ -35,7 +35,7 @@ test('Login Test', async ({ page }) => {
     await page.locator('[name="tier"]').fill('999'); 
 
     await page.locator('[name="wa_access_token"]').fill('EAAL797DrOE4BO4WmhJvaJ7Y1yW3tNIDGZAERggTKyW36xKc4MmfKQCopZBgTCdcCSqb6sztduDGFuerMiJjrr6ZCAaczZCGimS7Hp2iUxG0zxAA715ASZAGy5DkWwGfeWMEL5dwKvCN2VFcbFhmLbzVmKzUenQXhTeEmQ3P7ZCZBrLiGw5VteaxuVYXQHupdl28')
-
+    await page.waitForTimeout(2000)
     await page.locator('button[type="submit"]').click();
     await page.waitForTimeout(5000)
 

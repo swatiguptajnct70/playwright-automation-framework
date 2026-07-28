@@ -5,25 +5,25 @@ test('Login Test', async ({ page }) => {
     await page.goto('https://smart-exchange.gammasprint.com/');
 
     await page.getByPlaceholder('Email Address')
-        .fill('consumer.smartexchange@gmail.com');
+        .fill('test27072026_1@yopmail.com');
 
     await page.getByPlaceholder('Password')
-        .fill('Aionos@1234');
-    await page.waitForTimeout(1000);
+        .fill('test27072026_1');
+    await page.waitForTimeout(500);
 
     await page.getByRole('button', { name: 'Log In' }).click();
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(500);
 
     await page.getByRole('button', { name: 'Campaign' }).click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
 
     await page.getByRole('button', { name: 'Create Campaign' }).click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
 
     const campaignName = `Campaign_${Date.now()}`;
 
     await page.locator('input[name="campaign_name.value"]').fill(campaignName);
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
 
     const now = new Date();
 
@@ -62,27 +62,32 @@ test('Login Test', async ({ page }) => {
     await page.locator('input[name="end_duration.value"]').fill(endDate);
 
     await page.locator('body').click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
 
     await page.getByRole('combobox', { name: 'Select Audience' }).click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
     await page.getByRole('option').first().click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
 
     await page.getByRole('combobox', { name: 'Select Conversion Type' }).click();
     await page.getByRole('option', { name: 'CPD - Cost per delivery' }).click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
 
     await page.getByRole('combobox', { name: 'Select Preferred Channel' }).click();
     await page.getByRole('option', { name: 'Whatsapp' }).click();
     await page.getByRole('combobox', { name: 'Select WhatsApp Agent' }).click();
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(500)
     await page.getByRole('option').first().click();
     await page.getByRole('combobox', { name: 'Select WhatsApp Template' }).click();
 
     await page.getByRole('option').first().click();
     await page.getByRole('button', { name: 'Submit' }).click();
+    await page.waitForTimeout(2000)
+
+    await page.getByRole('button', { name: 'Lock my Campaign' }).click();
+    await page.getByRole('button', { name: 'Confirm' }).click();
     await page.waitForTimeout(5000)
+
 
 
 

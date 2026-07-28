@@ -5,10 +5,10 @@ test('Login Test', async ({ page }) => {
     await page.goto('https://smart-exchange.gammasprint.com/sign-in');
 
     await page.getByPlaceholder('Email Address')
-        .fill('consumer.smartexchange@gmail.com');
+        .fill('test27072026_1@yopmail.com');
 
     await page.getByPlaceholder('Password')
-        .fill('Aionos@1234');
+        .fill('test27072026_1');
 
     await page.waitForTimeout(500)
     await page.getByRole('button', { name: 'Log In' }).click();
