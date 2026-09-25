@@ -3,7 +3,7 @@ test.use({
     permissions: ['camera']
 });     
 test('TC_001 - Successful Aadhaar Verification', async ({ page }) => {
-    await page.goto('https://uat.digipass.verismart.ai/login');
+    await page.goto('https://dev.digipass.verismart.ai/login');
 
     await page.getByPlaceholder('Mobile Number')
         .fill('8770850075');
@@ -16,7 +16,7 @@ test('TC_001 - Successful Aadhaar Verification', async ({ page }) => {
     await page.locator('input').first().click();
     await page.keyboard.type('1234');
    
-        await page.waitForTimeout(1000)
+    await page.waitForTimeout(1000)
     await page.getByRole('button').last().click();
     // Profile menu option click
     await page.getByText('Profile').click();
@@ -51,10 +51,6 @@ test('TC_001 - Successful Aadhaar Verification', async ({ page }) => {
     }, { timeout: 120000 });
 
     await page.getByRole('button', { name: 'Send OTP' }).click();
-
-
-
-
 
     // Cursor captcha field me chala jayega
     await page.click('input[placeholder="Enter Captcha"]');

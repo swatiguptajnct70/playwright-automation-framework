@@ -38,8 +38,5 @@ async function selectFirstOptions(page, count) {
 }
     await page.locator('input[role="combobox"]').click();
         await selectFirstOptions(page, 5); // First 5 select
-        
-
-
 
 });

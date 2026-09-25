@@ -15,7 +15,7 @@
  
      await page.getByRole('button', { name: 'Log In' }).click();
      await page.waitForTimeout(1000);
-     await page.locator('tbody tr').first().locator('button').click();
+     await page.locator('tbody tr').second().locator('button').click();
      
      await page.getByRole('button', { name: 'Accept' }).click();
      await page.getByRole('button', { name: 'Accept' }).click();

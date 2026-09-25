@@ -5,10 +5,10 @@ test('Login Test', async ({ page }) => {
     await page.goto('https://smart-exchange.gammasprint.com/sign-in');
 
     await page.getByPlaceholder('Email Address')
-        .fill('test27072026_1@yopmail.com');
+        .fill('consumer.smartexchange@gmail.com');
 
     await page.getByPlaceholder('Password')
-        .fill('test27072026_1');
+        .fill('Aionos@1234');
 
     await page.waitForTimeout(1000)
     await page.getByRole('button', { name: 'Log In' }).click();
@@ -36,7 +36,22 @@ test('Login Test', async ({ page }) => {
 
     await page.locator('[name="wa_access_token"]').fill('EAAL797DrOE4BO4WmhJvaJ7Y1yW3tNIDGZAERggTKyW36xKc4MmfKQCopZBgTCdcCSqb6sztduDGFuerMiJjrr6ZCAaczZCGimS7Hp2iUxG0zxAA715ASZAGy5DkWwGfeWMEL5dwKvCN2VFcbFhmLbzVmKzUenQXhTeEmQ3P7ZCZBrLiGw5VteaxuVYXQHupdl28')
     await page.waitForTimeout(2000)
-    await page.locator('button[type="submit"]').click();
-    await page.waitForTimeout(5000)
+    const [response] = await Promise.all([
+    page.waitForResponse(res =>
+        res.url().includes('/v1/cpass/bot/save-agent') &&
+        res.request().method() === 'POST'
+    ),
+
+    page.locator('button[type="submit"]').click()
+]);
+
+console.log("Status Code:", response.status());
+
+try {
+    const responseBody = await response.json();
+    console.log("Response Body:", JSON.stringify(responseBody, null, 2));
+} catch {
+    console.log("Response Body:", await response.text());
+}
 
 });
