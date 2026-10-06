@@ -26,7 +26,33 @@ test('Login Test', async ({ page }) => {
 
     await page.getByRole('textbox', { name: 'Campaign Name' }).fill(Campaign_name);
     await page.waitForTimeout(2000)
-    
-})
+
+    await page.getByRole('combobox', { name: 'Select Notification Type' }).click();
+    await page.getByRole('option', { name: 'INVITE', exact: true }).click();
+    await page.waitForTimeout(1000)
+
+    await page.getByRole('combobox', { name: 'Select User Type' }).click();
+    await page.getByRole('option', { name: 'student' }).click();
+    await page.waitForTimeout(1000)
+    await page.getByRole('combobox', { name: 'Select Channel' }).click();
+    await page.getByRole('option', { name: 'email' }).click();
+    await page.getByRole('option', { name: 'whatsapp' }).click();
+    await page.waitForTimeout(1000)
+
+    await page.locator('.MuiBackdrop-root').click();
+    await page.getByRole('combobox', { name: 'Select Document Verification' }).click();
+    await page.getByRole('option', { name: 'True' }).click();
+    await page.waitForTimeout(1000)
+
+    await page.getByRole('combobox', { name: 'Select Template' }).click();
+    await page.getByRole('option', { name: 'student_normal_prod' }).click();
+    await page.waitForTimeout(1000)
+
+    await page.locator('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1yxmbwk').first().click();
+    await page.locator('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1yxmbwk').first().setInputFiles('1736145260328_student - Sheet1.csv');
+    await page.waitForTimeout (2000)
+    await page.getByRole('button', { name: 'Submit' }).click();
+    await page.waitForTimeout(4000)
+});
 
     
