@@ -1,58 +1,124 @@
+
 import { test, expect } from '@playwright/test';
 
-test('Login Test', async ({ page }) => {
+test('Sanity - Create Campus Invite & Notification', async ({ page }) => {
 
-    await page.goto('https://dev.digipass.verismart.ai/admin/');
+    // 1. Navigate to Login Page
+    await page.goto('https://dev.digipass.verismart.ai/admin/sign-in?redirect=back');
 
-    await page.getByPlaceholder('Enter your email')
-        .fill('Sarthak_dev_goenka');
-    await page.getByPlaceholder('Enter your Password')
-        .fill('Verismart@123');
-        await page.waitForTimeout(1000) 
-    await page.getByRole('button', { name: 'Sign In' }).click();
-    await page.waitForTimeout(1000)
+    // 2. Login
+    await page.getByRole('textbox', { name: 'Enter your email' })
+        .fill(process.env.TEST_EMAIL || 'Sarthak_dev_goenka');
 
-    await page.getByRole('button', { name: 'Prabhat demo premises' }).click();
-    await page.getByTestId('MuiDataTableBodyCell-1-4').getByRole('button', { name: 'Select' }).click();
-    await page.waitForTimeout(1000)
-    await page.mouse.move(5, 300); // x=5 means left edge
-    await page.getByRole('button').first().click();
-    await page.getByRole('button', { name: 'Invite & Notification' }).click();
-    await page.getByRole('button', { name: 'Campus' }).nth(1).click();
-    await page.getByRole('button', { name: 'Create Invite & Notification' }).click();
-    await page.waitForTimeout(2000)
+    await page.getByRole('textbox', { name: 'Enter your password' })
+        .fill(process.env.TEST_PASSWORD || 'Merismart@123');
 
-    const Campaign_name = `Invite_${Date.now()}`;
+    await page.getByRole('button', { name: 'Sign in' }).click();
 
-    await page.getByRole('textbox', { name: 'Campaign Name' }).fill(Campaign_name);
-    await page.waitForTimeout(2000)
+    // 3. Verify Successful Login
+    await expect(page).not.toHaveURL(/sign-in/);
 
-    await page.getByRole('combobox', { name: 'Select Notification Type' }).click();
-    await page.getByRole('option', { name: 'INVITE', exact: true }).click();
-    await page.waitForTimeout(1000)
+    // 4. Navigate to Campus Invites
+    await page.getByRole('button', { name: 'Keep sidebar open' }).click();
 
-    await page.getByRole('combobox', { name: 'Select User Type' }).click();
-    await page.getByRole('option', { name: 'student' }).click();
-    await page.waitForTimeout(1000)
-    await page.getByRole('combobox', { name: 'Select Channel' }).click();
-    await page.getByRole('option', { name: 'email' }).click();
-    await page.getByRole('option', { name: 'whatsapp' }).click();
-    await page.waitForTimeout(1000)
+    await page.getByRole('button', { name: 'Communication +' }).click();
 
-    await page.locator('.MuiBackdrop-root').click();
-    await page.getByRole('combobox', { name: 'Select Document Verification' }).click();
-    await page.getByRole('option', { name: 'True' }).click();
-    await page.waitForTimeout(1000)
+    await page.getByRole('button', { name: 'Invites & alerts' }).click();
 
-    await page.getByRole('combobox', { name: 'Select Template' }).click();
-    await page.getByRole('option', { name: 'student_normal_prod' }).click();
-    await page.waitForTimeout(1000)
+    await page.getByRole('button', { name: 'Campus invites' }).click();
 
-    await page.locator('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1yxmbwk').first().click();
-    await page.locator('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1yxmbwk').first().setInputFiles('1736145260328_student - Sheet1.csv');
-    await page.waitForTimeout (2000)
-    await page.getByRole('button', { name: 'Submit' }).click();
+    // 5. Open Create Invite
+    await page.getByRole('button', {
+        name: 'Create Invite & Notification'
+    }).click();
+
+    // 6. Enter Campaign Name
+    await page.getByRole('textbox', { name: 'Campaign Name' })
+        .fill('Invite_test');
+
+    // 7. Select Notification Type
+    await page.getByRole('combobox', {
+        name: 'Select Notification Type'
+    }).click();
+
+    await page.getByRole('option', {
+        name: 'INVITE',
+        exact: true
+    }).click();
+
+    // 8. Select User Type
+    await page.getByRole('combobox', {
+        name: 'Select User Type'
+    }).click();
+
+    await page.getByRole('option', {
+        name: 'student',
+        exact: true
+    }).click();
+
+    // 9. Select Channels
+    const channelDropdown = page.getByRole('combobox', {
+        name: 'Select Channel'
+    });
+
+    await channelDropdown.click();
+
+    await page.getByRole('option', {
+        name: 'whatsapp',
+        exact: true
+    }).click();
+
+    await page.getByRole('option', {
+        name: 'email',
+        exact: true
+    }).click();
+
+    // Close dropdown using Escape
+    await page.keyboard.press('Escape');
+
+    // 10. Select Document Verification
+    await page.getByRole('combobox', {
+        name: 'Select Document Verification'
+    }).click();
+
+    await page.getByRole('option', {
+        name: 'True',
+        exact: true
+    }).click();
+
+    // 11. Select Template
+    await page.getByRole('combobox', {
+        name: 'Select Template'
+    }).click();
+
+    await page.getByRole('option', {
+        name: 'student_normal_prod',
+        exact: true
+    }).click();
+
+    // 12. Select Individual Invite Option
+    await page.getByRole('button', {
+        name: /Send Individual Invite/
+    }).click();
+
+    // 13. Upload Excel File
+    const path = require('path');
+
+    const filePath = path.resolve(
+        process.cwd(),
+        'test-data',
+        '1770640467642_student_normal (39).xlsx'
+    );
+
+    await page.locator('input[type="file"]').setInputFiles(filePath);
+
     await page.waitForTimeout(4000)
-});
 
-    
+    // 14. Submit
+    await page.getByRole('button', {
+        name: 'Submit',
+        exact: true
+    }).click();
+    await page.waitForTimeout(4000)
+
+});
