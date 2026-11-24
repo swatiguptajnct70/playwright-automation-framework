@@ -1,4 +1,3 @@
-
 # Playwright
 node_modules/
 /test-results/
@@ -7,4 +6,7 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 
-#temp
+# Environment variables
+.env
+
+# temp

@@ -119,9 +119,6 @@ test('Sanity - Create Campus Invite & Notification', async ({ page }) => {
         name: 'Submit',
         exact: true
     }).click();
- await page.waitForTimeout(4000)
-    // 15. Verify Submission
-    // Replace this assertion with the actual success message
-    // or expected result displayed by the application.
+    await page.waitForTimeout(4000)
 
 });
